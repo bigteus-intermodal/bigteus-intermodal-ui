@@ -12,16 +12,16 @@ import {
 // ─── Image Paths (update to match your actual asset imports) ─────────────────
 // In your project, replace these with: import logoImg from "./assets/logo.png"; etc.
 const ASSETS = {
-  logo: "../src/assets/logo.png",                            // BTi logo
-  heroContainers: "../src/assets/container_leasing.jpeg",      // stacked blue sky containers
-  containersRoad: "../src/assets/containers_road.jpeg",       // road flanked by containers
-  containersSunset: "../src/assets/containers_sunset.jpeg",   // sunset golden containers
-  containersStack: "../src/assets/containers_stack.jpeg",     // industrial stacked
-  cabinGreen: "../src/assets/cabin_green.jpeg",               // green office cabin
-  kioskBlue: "../src/assets/kiosk_blue.jpeg",                 // blue open kiosk
-  portacabinWhite: "../src/assets/portacabin_white.jpeg",     // white portacabin
-  background: "../src/assets/background.jpeg",       // road flanked by containers
-  bgVideo: "../src/assets/video/bgvideo.mp4",         // hero background video
+  logo: "/assets/logo.png",                            // BTi logo
+  heroContainers: "/assets/container_leasing.jpeg",      // stacked blue sky containers
+  containersRoad: "/assets/containers_road.jpeg",       // road flanked by containers
+  containersSunset: "/assets/containers_sunset.jpeg",   // sunset golden containers
+  containersStack: "/assets/containers_stack.jpeg",     // industrial stacked
+  cabinGreen: "/assets/cabin_green.jpeg",               // green office cabin
+  kioskBlue: "/assets/kiosk_blue.jpeg",                 // blue open kiosk
+  portacabinWhite: "/assets/portacabin_white.jpeg",     // white portacabin
+  background: "/assets/background.jpeg",       // road flanked by containers
+  bgVideo: "/assets/video/bgvideo.mp4",         // hero background video
 };
  
 // ─── Theme Context ────────────────────────────────────────────────────────────
