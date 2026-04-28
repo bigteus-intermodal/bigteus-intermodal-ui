@@ -8,31 +8,19 @@ import {
   Phone, Send, Linkedin, Twitter, Facebook, Instagram, ArrowUp,
   Shield, Star, Users, Globe, CheckCircle, ChevronRight
 } from "lucide-react";
- 
-import logo from "./assets/logo.png";
-import heroContainers from "./assets/container_leasing.jpeg";
-import containersRoad from "./assets/containers_road.jpeg";
-import containersSunset from "./assets/containers_sunset.jpeg";
-import containersStack from "./assets/containers_stack.jpeg";
-import cabinGreen from "./assets/cabin_green.jpeg";
-import kioskBlue from "./assets/kiosk_blue.jpeg";
-import portacabinWhite from "./assets/portacabin_white.jpeg";
-import background from "./assets/background.jpeg";
-import bgVideo from "./assets/video/bgvideo.mp4";
 
 const ASSETS = {
-  logo,
-  heroContainers,
-  containersRoad,
-  containersSunset,
-  containersStack,
-  cabinGreen,
-  kioskBlue,
-  portacabinWhite,
-  background,
-  bgVideo,
+  logo: "/assets/logo.png",
+  heroContainers: "/assets/container_leasing.jpeg",
+  containersRoad: "/assets/containers_road.jpeg",
+  containersSunset: "/assets/containers_sunset.jpeg",
+  containersStack: "/assets/containers_stack.jpeg",
+  cabinGreen: "/assets/cabin_green.jpeg",
+  kioskBlue: "/assets/kiosk_blue.jpeg",
+  portacabinWhite: "/assets/portacabin_white.jpeg",
+  background: "/assets/background.jpeg",
+  bgVideo: "/assets/video/bgvideo.mp4",
 };
- 
 // ─── Theme Context ────────────────────────────────────────────────────────────
 const ThemeContext = createContext();
 const useTheme = () => useContext(ThemeContext);
