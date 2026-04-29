@@ -20,12 +20,16 @@ const ASSETS = {
   portacabinWhite: "/assets/portacabin_white.jpeg",
   background: "/assets/background.jpeg",
   bgVideo: "/assets/video/bgvideo.mp4",
+  yellowContainer: "/assets/vibrant-yellow-shipping-container-against-blue-sky.jpg.jpeg",
+  truckPort: "/assets/shipping-container-being-loaded-onto-truck-port.jpg.jpeg",
+  container: "/assets/container.jpeg",
+  containerInner: "/assets/containerinner.jpg.jpeg",
 };
 // ─── Theme Context ────────────────────────────────────────────────────────────
 const ThemeContext = createContext();
 const useTheme = () => useContext(ThemeContext);
 const ThemeProvider = ({ children }) => {
-  const [dark, setDark] = useState(true);
+  const [dark, setDark] = useState(false);
   return (
     <ThemeContext.Provider value={{ dark, toggle: () => setDark(d => !d) }}>
       {children}
@@ -67,36 +71,36 @@ const SERVICES = [
     tag: "TRADING",
     title: "Container Trading",
     subtitle: "Sell & Buy",
-    desc: "We offer a wide range of new and used shipping containers — dry and refrigerated units in multiple sizes. Reliable, cost-effective container solutions across India and overseas.",
+    desc: "We offer a wide range of new and used shipping containers, including both dry and refrigerated units, available in multiple sizes. Our services are designed to support businesses with reliable and cost-effective container solutions across various locations in India and overseas.",
     color: B.gold,
-    img: ASSETS.containersStack,
+    img: ASSETS.yellowContainer,
   },
   {
     icon: Package,
     tag: "LEASING",
     title: "Container Leasing",
     subtitle: "Export & Domestic",
-    desc: "Dependable leasing solutions for dry and refrigerated containers — new and used units with flexible options, timely service, and a focus on quality and customer satisfaction.",
+    desc: "We provides dependable leasing solutions for dry and refrigerated containers. We supply both new and used units, supporting businesses with flexible options and timely service. Our focus is on delivering quality, efficiency, and customer satisfaction in every project.",
     color: B.steel,
-    img: ASSETS.heroContainers,
+    img: ASSETS.container,
   },
   {
     icon: Wrench,
     tag: "FABRICATION",
     title: "Container Fabrication",
     subtitle: "Office, Industrial & Storage",
-    desc: "Professional fabrication services creating customised container solutions for offices, industrial use, and storage. Quality, innovation, and durability in every project.",
+    desc: "We offers professional container fabrication services, creating customized container solutions for a wide range of applications. We focus on quality, innovation, and durability to deliver results that match your business needs.",
     color: B.accent,
-    img: ASSETS.cabinGreen,
+    img: ASSETS.portacabinWhite,
   },
   {
     icon: Truck,
     tag: "TRANSPORTATION",
     title: "Container Transport",
-    subtitle: "Door-to-Door Road Services",
-    desc: "Reliable road transportation of loaded and empty containers across India. Safe, timely delivery to client locations with efficiency and care.",
+    subtitle: "By Road Movement",
+    desc: "We provides reliable container road transportation services across India. We ensure safe and timely delivery of both loaded and empty containers, supporting your logistics needs with efficiency and care.",
     color: "#2E7D52",
-    img: ASSETS.containersRoad,
+    img: ASSETS.truckPort,
   },
 ];
  
@@ -109,7 +113,7 @@ const MEDIA_ITEMS = [
   { src: ASSETS.containersStack,  alt: "Stacked containers at port",     color: B.steel },
   { src: ASSETS.cabinGreen,       alt: "Modified office cabin container", color: "#2E7D52" },
   { src: ASSETS.kioskBlue,        alt: "Open-side kiosk container",      color: B.accent },
-  { src: ASSETS.portacabinWhite,  alt: "Portable cabin container",       color: B.navy },
+  { src: ASSETS.containerInner,   alt: "Portable cabin container",       color: B.navy },
 ];
  
 // ─── useInView ────────────────────────────────────────────────────────────────
@@ -198,13 +202,13 @@ const Navbar = () => {
  
         {/* Right controls */}
         <div style={{ display: "flex", gap: "0.6rem", alignItems: "center" }}>
-          <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={toggle}
+          {/* <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={toggle}
             style={{ width: 38, height: 38, borderRadius: "50%", cursor: "pointer",
               background: t.surface2, border: `1px solid ${t.border}`,
               display: "flex", alignItems: "center", justifyContent: "center",
               color: dark ? B.goldLt : B.navy }}>
             {dark ? <Sun size={15} /> : <Moon size={15} />}
-          </motion.button>
+          </motion.button> */}
  
           <motion.a href="#contact" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}
             className="bti-nav-cta"
@@ -461,7 +465,7 @@ const Services = () => {
         </SR>
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
           gap: "1.5rem",
         }}>
           {SERVICES.map((s, i) => (
@@ -480,70 +484,70 @@ const Services = () => {
               }}
               onMouseEnter={e => e.currentTarget.style.borderColor = `${s.color}60`}
               onMouseLeave={e => e.currentTarget.style.borderColor = t.border}>
-              {/* Image strip */}
-              <div style={{ height: 190, overflow: "hidden", position: "relative" }}>
-                <img src={s.img} alt={s.title}
-                  style={{ width: "100%", height: "100%", objectFit: "cover",
-                    transition: "transform 0.6s ease, filter 0.6s ease" }}
-                  onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.1)"; e.currentTarget.style.filter = "brightness(1.15)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.filter = "brightness(1)"; }}
-                />
-                <div style={{
-                  position: "absolute", inset: 0,
-                  background: `linear-gradient(to top, ${dark ? "rgba(11,15,26,0.85)" : "rgba(27,43,75,0.6)"} 0%, transparent 60%)`,
-                }} />
-                {/* Tag pill */}
-                <div style={{
-                  position: "absolute", top: 12, left: 12,
-                  background: `${s.color}CC`, borderRadius: 4,
-                  padding: "4px 10px",
-                  fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.18em",
-                  color: "#fff", fontFamily: "'Barlow Condensed', sans-serif",
-                  transition: "transform 0.3s, box-shadow 0.3s",
-                }}
-                  onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.1)"; e.currentTarget.style.boxShadow = `0 4px 15px ${s.color}50`; }}
-                  onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "none"; }}>
-                  {s.tag}
-                </div>
-              </div>
- 
-              {/* Body */}
-              <div style={{ padding: "1.5rem" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: "0.6rem" }}>
-                  <motion.div
-                    whileHover={{ scale: 1.2, rotate: 10, background: `${s.color}30`, transition: { duration: 0.3 } }}
-                    style={{
-                      width: 36, height: 36, borderRadius: 8,
-                      background: `${s.color}18`, border: `1px solid ${s.color}35`,
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      transition: "background 0.3s",
-                    }}>
-                    <s.icon size={16} style={{ color: s.color }} />
-                  </motion.div>
-                  <div>
-                    <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "1.05rem",
-                      fontWeight: 600, color: t.text, letterSpacing: "0.03em" }}>
-                      {s.title}
-                    </div>
-                    <div style={{ fontSize: "0.68rem", color: s.color, fontWeight: 600,
-                      letterSpacing: "0.12em", fontFamily: "'Barlow Condensed', sans-serif" }}>
-                      {s.subtitle}
-                    </div>
+                {/* Image strip */}
+                <div style={{ height: 190, overflow: "hidden", position: "relative" }}>
+                  <img src={s.img} alt={s.title}
+                    style={{ width: "100%", height: "100%", objectFit: "cover",
+                      transition: "transform 0.6s ease, filter 0.6s ease" }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.1)"; e.currentTarget.style.filter = "brightness(1.15)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.filter = "brightness(1)"; }}
+                  />
+                  <div style={{
+                    position: "absolute", inset: 0,
+                    background: `linear-gradient(to top, ${dark ? "rgba(11,15,26,0.85)" : "rgba(27,43,75,0.6)"} 0%, transparent 60%)`,
+                  }} />
+                  {/* Tag pill */}
+                  <div style={{
+                    position: "absolute", top: 12, left: 12,
+                    background: `${s.color}CC`, borderRadius: 4,
+                    padding: "4px 10px",
+                    fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.18em",
+                    color: "#fff", fontFamily: "'Barlow Condensed', sans-serif",
+                    transition: "transform 0.3s, box-shadow 0.3s",
+                  }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.1)"; e.currentTarget.style.boxShadow = `0 4px 15px ${s.color}50`; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "none"; }}>
+                    {s.tag}
                   </div>
                 </div>
-                <p style={{ color: t.muted, lineHeight: 1.7, fontSize: "0.86rem",
-                  fontFamily: "'Barlow', sans-serif" }}>
-                  {s.desc}
-                </p>
-              </div>
- 
-              {/* Bottom accent line */}
-              <motion.div
-                initial={{ scaleX: 0 }}
-                whileHover={{ scaleX: 1 }}
-                style={{ height: 3, background: `linear-gradient(90deg, ${s.color}, ${B.gold}, transparent)`, transformOrigin: "left", transition: "transform 0.4s" }} />
-            </motion.div>
-          ))}
+
+                {/* Body */}
+                <div style={{ padding: "1.5rem" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: "0.6rem" }}>
+                    <motion.div
+                      whileHover={{ scale: 1.2, rotate: 10, background: `${s.color}30`, transition: { duration: 0.3 } }}
+                      style={{
+                        width: 36, height: 36, borderRadius: 8,
+                        background: `${s.color}18`, border: `1px solid ${s.color}35`,
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        transition: "background 0.3s",
+                      }}>
+                      <s.icon size={16} style={{ color: s.color }} />
+                    </motion.div>
+                    <div>
+                      <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "1.05rem",
+                        fontWeight: 600, color: t.text, letterSpacing: "0.03em" }}>
+                        {s.title}
+                      </div>
+                      <div style={{ fontSize: "0.68rem", color: s.color, fontWeight: 600,
+                        letterSpacing: "0.12em", fontFamily: "'Barlow Condensed', sans-serif" }}>
+                        {s.subtitle}
+                      </div>
+                    </div>
+                  </div>
+                  <p style={{ color: t.muted, lineHeight: 1.7, fontSize: "0.86rem",
+                    fontFamily: "'Barlow', sans-serif" }}>
+                    {s.desc}
+                  </p>
+                </div>
+
+                {/* Bottom accent line */}
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  whileHover={{ scaleX: 1 }}
+                  style={{ height: 3, background: `linear-gradient(90deg, ${s.color}, ${B.gold}, transparent)`, transformOrigin: "left", transition: "transform 0.4s" }} />
+              </motion.div>
+            ))}
         </div>
       </div>
     </section>
@@ -586,11 +590,19 @@ const About = () => {
  
           <p style={{ color: t.muted, lineHeight: 1.8, marginBottom: "1.2rem",
             fontSize: "0.93rem", fontFamily: "'Barlow', sans-serif" }}>
-            Established in 2026, BIGTEUS INTERMODAL specializes in shipping container solutions — container sales, leasing, and custom fabrication. We provide high-quality containers for export, import, commercial, industrial, and storage purposes.
+            Established in 2026, BIGTEUS INTERMODAL specializes in shipping container solutions, including container sales, leasing, and custom fabrication. We provide high-quality containers for export, import, commercial, industrial, and storage purposes.
           </p>
-          <p style={{ color: t.muted, lineHeight: 1.8, marginBottom: "2rem",
+          <p style={{ color: t.muted, lineHeight: 1.8, marginBottom: "1.2rem",
             fontSize: "0.93rem", fontFamily: "'Barlow', sans-serif" }}>
-            From our Chennai headquarters, we orchestrate seamless container transactions and intermodal freight operations that power global commerce — with a focus on durability, customization, and efficient logistics.
+            Bigteus Intermodal Private Limited is a trusted bridge between buyers and sellers across the world's most active shipping corridors.
+          </p>
+          <p style={{ color: t.muted, lineHeight: 1.8, marginBottom: "1.2rem",
+            fontSize: "0.93rem", fontFamily: "'Barlow', sans-serif" }}>
+            From our Chennai headquarters, we orchestrate seamless container transactions and intermodal freight operations that power global commerce.
+          </p>
+          <p style={{ color: B.goldLt, lineHeight: 1.8, marginBottom: "2rem",
+            fontSize: "0.93rem", fontFamily: "'Barlow', sans-serif", fontStyle: "italic" }}>
+            Thank you for choosing BIGTEUS INTERMODAL as your trusted partner in container solution.
           </p>
  
           {/* Tagline pills */}
@@ -842,40 +854,42 @@ const Media = () => {
           </h2>
         </motion.div>
  
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(310px, 1fr))",
-          gap: "1.2rem",
-        }}>
-          {MEDIA_ITEMS.map((img, i) => (
-            <motion.div key={i}
-              initial={{ opacity: 0, scale: 0.93 }}
-              animate={visible ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: i * 0.1, duration: 0.55 }}
-              whileHover="hover"
-              style={{ position: "relative", borderRadius: 10, overflow: "hidden",
-                aspectRatio: "4/3", cursor: "pointer", border: `1px solid ${t.border}`,
-                transition: "border-color 0.4s, box-shadow 0.4s" }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = `${img.color}60`; e.currentTarget.style.boxShadow = `0 20px 50px rgba(0,0,0,0.3), 0 0 25px ${img.color}15`; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = t.border; e.currentTarget.style.boxShadow = "none"; }}>
-              <motion.img src={img.src} alt={img.alt}
-                variants={{ hover: { scale: 1.1, filter: "brightness(1.1)" } }} transition={{ duration: 0.6 }}
-                style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-              <motion.div variants={{ hover: { opacity: 1 } }} initial={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                style={{
-                  position: "absolute", inset: 0,
-                  background: `linear-gradient(to top, rgba(11,15,26,0.88) 0%, ${img.color}18 100%)`,
-                  display: "flex", alignItems: "flex-end", padding: "1.2rem",
-                }}>
-                <span style={{ color: "#fff", fontSize: "0.85rem", fontWeight: 500,
-                  fontFamily: "'Barlow', sans-serif" }}>{img.alt}</span>
+        <div style={{ overflow: "hidden", position: "relative" }}>
+          <motion.div
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ x: { duration: 40, repeat: Infinity, ease: "linear" } }}
+            style={{ display: "flex", gap: "1.2rem", width: "max-content" }}>
+            {[...MEDIA_ITEMS, ...MEDIA_ITEMS].map((img, i) => (
+              <motion.div key={i}
+                initial={{ opacity: 0, scale: 0.93 }}
+                animate={visible ? { opacity: 1, scale: 1 } : {}}
+                transition={{ delay: (i % MEDIA_ITEMS.length) * 0.1, duration: 0.55 }}
+                whileHover="hover"
+                style={{ position: "relative", borderRadius: 10, overflow: "hidden",
+                  aspectRatio: "4/3", cursor: "pointer", border: `1px solid ${t.border}`,
+                  transition: "border-color 0.4s, box-shadow 0.4s",
+                  minWidth: 310, maxWidth: 310, flexShrink: 0 }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = `${img.color}60`; e.currentTarget.style.boxShadow = `0 20px 50px rgba(0,0,0,0.3), 0 0 25px ${img.color}15`; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = t.border; e.currentTarget.style.boxShadow = "none"; }}>
+                <motion.img src={img.src} alt={img.alt}
+                  variants={{ hover: { scale: 1.1, filter: "brightness(1.1)" } }} transition={{ duration: 0.6 }}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <motion.div variants={{ hover: { opacity: 1 } }} initial={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  style={{
+                    position: "absolute", inset: 0,
+                    background: `linear-gradient(to top, rgba(11,15,26,0.88) 0%, ${img.color}18 100%)`,
+                    display: "flex", alignItems: "flex-end", padding: "1.2rem",
+                  }}>
+                  <span style={{ color: "#fff", fontSize: "0.85rem", fontWeight: 500,
+                    fontFamily: "'Barlow', sans-serif" }}>{img.alt}</span>
+                </motion.div>
+                <motion.div variants={{ hover: { opacity: 1 } }} initial={{ opacity: 0 }}
+                  style={{ position: "absolute", inset: 0, borderRadius: 10,
+                    boxShadow: `inset 0 0 0 2px ${img.color}`, pointerEvents: "none" }} />
               </motion.div>
-              <motion.div variants={{ hover: { opacity: 1 } }} initial={{ opacity: 0 }}
-                style={{ position: "absolute", inset: 0, borderRadius: 10,
-                  boxShadow: `inset 0 0 0 2px ${img.color}`, pointerEvents: "none" }} />
-            </motion.div>
-          ))}
+            ))}
+          </motion.div>
         </div>
       </div>
     </section>
@@ -1098,6 +1112,10 @@ const Footer = () => {
             <p style={{ color: "#5A6785", fontSize: "0.78rem",
               fontFamily: "'Barlow', sans-serif", marginBottom: "0.3rem" }}>
               info@bigteus-intermodal.com
+            </p>
+            <p style={{ color: "#5A6785", fontSize: "0.78rem",
+              fontFamily: "'Barlow', sans-serif", marginBottom: "0.3rem" }}>
+              sales@bigteus-intermodal.com
             </p>
             <p style={{ color: "#3D4F6A", fontSize: "0.68rem", marginTop: "0.6rem",
               fontFamily: "'Barlow', sans-serif" }}>
