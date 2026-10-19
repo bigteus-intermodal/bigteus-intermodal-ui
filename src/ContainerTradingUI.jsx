@@ -25,6 +25,14 @@ const ASSETS = {
   container: "/assets/container.jpeg",
   containerInner: "/assets/containerinner.jpg.jpeg",
 };
+
+// ─── SEO metadata (applied at runtime; index.html is left untouched) ─────────
+const SEO = {
+  title: "Used Shipping Containers for Sale in Chennai | Bigteus Intermodal",
+  description:
+    "Bigteus Intermodal, Perungudi, Chennai: used and new shipping containers for sale, container leasing, fabrication and road transportation across India. Enquire about availability, size, condition, pricing and delivery.",
+};
+
 // ─── Theme Context ────────────────────────────────────────────────────────────
 const ThemeContext = createContext();
 const useTheme = () => useContext(ThemeContext);
@@ -71,36 +79,40 @@ const SERVICES = [
     tag: "TRADING",
     title: "Container Trading",
     subtitle: "Sell & Buy",
-    desc: "We offer a wide range of new and used shipping containers, including both dry and refrigerated units, available in multiple sizes. Our services are designed to support businesses with reliable and cost-effective container solutions across various locations in India and overseas.",
+    desc: "Looking for used shipping containers for sale? We offer a wide range of new and used shipping containers, including dry and refrigerated units, in multiple sizes. Our container trading services support businesses with reliable, cost-effective solutions across various locations in India and overseas. Contact our Chennai team to enquire about availability, dimensions, condition, pricing and delivery.",
     color: B.gold,
     img: ASSETS.yellowContainer,
+    alt: "Yellow shipping container against a blue sky",
   },
   {
     icon: Package,
     tag: "LEASING",
     title: "Container Leasing",
     subtitle: "Export & Domestic",
-    desc: "We provides dependable leasing solutions for dry and refrigerated containers. We supply both new and used units, supporting businesses with flexible options and timely service. Our focus is on delivering quality, efficiency, and customer satisfaction in every project.",
+    desc: "We provide dependable container leasing solutions for dry and refrigerated containers, for both export and domestic requirements. We supply new and used units, supporting businesses with flexible options and timely service. Our focus is on delivering quality, efficiency and customer satisfaction in every project.",
     color: B.steel,
     img: ASSETS.container,
+    alt: "Shipping container available for leasing",
   },
   {
     icon: Wrench,
     tag: "FABRICATION",
     title: "Container Fabrication",
     subtitle: "Office, Industrial & Storage",
-    desc: "We offers professional container fabrication services, creating customized container solutions for a wide range of applications. We focus on quality, innovation, and durability to deliver results that match your business needs.",
+    desc: "We offer professional container fabrication services, creating customized container solutions for office, industrial and storage applications. We focus on quality, innovation and durability to deliver results that match your business needs.",
     color: B.accent,
     img: ASSETS.portacabinWhite,
+    alt: "White fabricated portable cabin built from a shipping container",
   },
   {
     icon: Truck,
     tag: "TRANSPORTATION",
     title: "Container Transport",
     subtitle: "By Road Movement",
-    desc: "We provides reliable container road transportation services across India. We ensure safe and timely delivery of both loaded and empty containers, supporting your logistics needs with efficiency and care.",
+    desc: "We provide reliable container road transportation services across India. We ensure safe and timely delivery of both loaded and empty containers, supporting your logistics needs with efficiency and care.",
     color: "#2E7D52",
     img: ASSETS.truckPort,
+    alt: "Shipping container being loaded onto a truck at a port",
   },
 ];
  
@@ -108,12 +120,39 @@ const PORTS_INDIA = ["Chennai", "Mundra", "Mumbai NSA", "Tuticorin", "Delhi ICD"
 const PORTS_OVERSEAS = ["China", "Singapore", "Malaysia", "Indonesia", "Dubai", "Europe", "Colombo"];
  
 const MEDIA_ITEMS = [
-  { src: ASSETS.containersRoad,   alt: "Container yard road view",       color: B.navy },
-  { src: ASSETS.containersSunset, alt: "Containers at sunset",           color: B.gold },
-  { src: ASSETS.containersStack,  alt: "Stacked containers at port",     color: B.steel },
-  { src: ASSETS.cabinGreen,       alt: "Modified office cabin container", color: "#2E7D52" },
-  { src: ASSETS.kioskBlue,        alt: "Open-side kiosk container",      color: B.accent },
-  { src: ASSETS.containerInner,   alt: "Portable cabin container",       color: B.navy },
+  { src: ASSETS.containersRoad,   alt: "Shipping containers beside a container yard road", color: B.navy },
+  { src: ASSETS.containersSunset, alt: "Shipping containers at sunset",                     color: B.gold },
+  { src: ASSETS.containersStack,  alt: "Stacked shipping containers at a port",             color: B.steel },
+  { src: ASSETS.cabinGreen,       alt: "Green modified office cabin container",             color: "#2E7D52" },
+  { src: ASSETS.kioskBlue,        alt: "Blue open-side kiosk container",                    color: B.accent },
+  { src: ASSETS.containerInner,   alt: "Portable cabin container",                          color: B.navy },
+];
+
+const FOOTER_COLS = [
+  {
+    title: "Services",
+    links: [
+      { label: "Container Trading", href: "#services" },
+      { label: "Container Leasing", href: "#services" },
+      { label: "Container Fabrication", href: "#services" },
+      { label: "Container Transport", href: "#services" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { label: "About Us", href: "#about" },
+      { label: "Media Gallery", href: "#media" },
+      { label: "Contact", href: "#contact" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { label: "Privacy Policy", href: "#" },
+      { label: "Terms of Service", href: "#" },
+    ],
+  },
 ];
  
 // ─── useInView ────────────────────────────────────────────────────────────────
@@ -167,6 +206,7 @@ const Navbar = () => {
   return (
     <>
       <motion.nav
+        aria-label="Main navigation"
         initial={{ y: -80 }} animate={{ y: 0 }} transition={{ duration: 0.6 }}
         style={{
           position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
@@ -180,8 +220,9 @@ const Navbar = () => {
       >
         {/* Logo */}
         <motion.a href="#home" whileHover={{ scale: 1.04 }}
+          aria-label="Bigteus Intermodal – home"
           style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-          <img src={ASSETS.logo} alt="BTi"
+          <img src={ASSETS.logo} alt="Bigteus Intermodal logo"
             style={{ height: 48, width: 160, objectFit: "contain",
               filter: dark ? "drop-shadow(0 0 8px rgba(200,134,10,0.3))" : "none" }} />
         </motion.a>
@@ -222,9 +263,11 @@ const Navbar = () => {
  
           <motion.button whileTap={{ scale: 0.9 }} onClick={() => setOpen(o => !o)}
             className="bti-hamburger"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
             style={{ display: "none", background: "transparent", border: "none",
               color: t.text, cursor: "pointer", padding: 4 }}>
-            {open ? <X size={24} /> : <Menu size={24} />}
+            {open ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
           </motion.button>
         </div>
       </motion.nav>
@@ -271,6 +314,10 @@ const Navbar = () => {
           .bti-nav-cta { display: none !important; }
           .bti-hamburger { display: flex !important; }
         }
+        a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+          outline: 2px solid #E8A020;
+          outline-offset: 3px;
+        }
       `}</style>
     </>
   );
@@ -282,14 +329,14 @@ const Hero = () => {
   const t = T(dark);
  
   return (
-    <section id="home" style={{
+    <section id="home" aria-labelledby="hero-heading" style={{
       position: "relative", minHeight: "100vh",
       display: "flex", flexDirection: "column",
       alignItems: "center", justifyContent: "center",
       overflow: "hidden",
     }}>
-      {/* Background video */}
-      <video autoPlay muted loop playsInline style={{
+      {/* Background video (decorative) */}
+      <video autoPlay muted loop playsInline aria-hidden="true" style={{
         position: "absolute", inset: 0, zIndex: 0,
         width: "100%", height: "100%", objectFit: "cover",
       }}>
@@ -297,7 +344,7 @@ const Hero = () => {
       </video>
  
       {/* Dark overlay — strong so text is readable */}
-      <div style={{
+      <div aria-hidden="true" style={{
         position: "absolute", inset: 0, zIndex: 1,
         background: dark
           ? "linear-gradient(160deg, rgba(11,15,26,0.92) 0%, rgba(15,23,42,0.75) 50%, rgba(11,15,26,0.90) 100%)"
@@ -305,40 +352,37 @@ const Hero = () => {
       }} />
  
       {/* Gold accent stripe top */}
-      <div style={{
+      <div aria-hidden="true" style={{
         position: "absolute", top: 0, left: 0, right: 0, height: 4, zIndex: 5,
         background: B.gradG,
       }} />
  
       {/* Content */}
       <div style={{ position: "relative", zIndex: 10, textAlign: "center",
-        maxWidth: 860, padding: "0 1.5rem", width: "100%" }}>
+        maxWidth: 860, padding: "100px 1.5rem 0", width: "100%" }}>
  
-        {/* Headline */}
-        <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
+        {/* Single semantic H1 */}
+        <motion.h1 id="hero-heading" initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.8 }}
           style={{
             fontFamily: "'Oswald', sans-serif",
-            fontSize: "clamp(0.8rem, 6vw, 4rem)",
-            lineHeight: 1.0, fontWeight: 700, marginBottom: "0.4rem",
+            fontSize: "clamp(2rem, 6vw, 4rem)",
+            lineHeight: 1.1, fontWeight: 700, marginTop: 0, marginBottom: "1.2rem",
             letterSpacing: "-0.01em",
-           // color: dark ? "#FFFFFF" : "#0F172A",
             color: "#FFFFFF",
             textShadow: "0 2px 20px rgba(200,134,10,0.4), 0 4px 40px rgba(0,0,0,0.5), 0 0 80px rgba(200,134,10,0.15)",
           }}>
-          WELCOME TO
-        </motion.h1>
-        <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.55, duration: 0.8 }}
-          style={{
-            fontFamily: "'Oswald', sans-serif",
-            fontSize: "clamp(0.8rem, 6vw, 4rem)",
-            lineHeight: 1.0, fontWeight: 700, marginBottom: "1.4rem",
-            color: "#FFFFFF",
-            textShadow: "0 2px 20px rgba(200,134,10,0.5), 0 4px 50px rgba(0,0,0,0.6), 0 0 100px rgba(200,134,10,0.2), 0 0 150px rgba(200,134,10,0.1)",
+          Used Shipping Containers for Sale
+          <span style={{
+            display: "block", marginTop: "0.5rem",
+            fontSize: "clamp(1.1rem, 3.4vw, 2rem)",
+            fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase",
+            color: B.goldLt,
+            textShadow: "0 2px 20px rgba(0,0,0,0.6), 0 0 60px rgba(200,134,10,0.25)",
           }}>
-          BIGTEUS INTERMODAL
-        </motion.div>
+            Bigteus Intermodal
+          </span>
+        </motion.h1>
  
         {/* Tagline */}
         <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -346,9 +390,21 @@ const Hero = () => {
           style={{ fontSize: "clamp(1rem, 2.2vw, 1.3rem)",
             color: "#B0BDD0",
             fontFamily: "'Barlow', sans-serif", fontWeight: 300,
-            letterSpacing: "0.05em", marginBottom: "2.5rem",
-            maxWidth: 520, margin: "0 auto 2.5rem" }}>
+            letterSpacing: "0.05em", margin: "0 auto 1rem",
+            maxWidth: 560 }}>
           Your Trusted Partner In Container Solution
+        </motion.p>
+
+        {/* Description */}
+        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.75 }}
+          style={{ fontSize: "clamp(0.92rem, 1.8vw, 1.05rem)",
+            color: "#B0BDD0", lineHeight: 1.7,
+            fontFamily: "'Barlow', sans-serif", fontWeight: 400,
+            margin: "0 auto 2.5rem", maxWidth: 680 }}>
+          From our office in Perungudi, Chennai, Bigteus Intermodal supports businesses across India with
+          new and used shipping container procurement, including dry and refrigerated containers,
+          along with container leasing, container fabrication and container transportation by road.
         </motion.p>
  
         {/* CTAs */}
@@ -389,7 +445,7 @@ const Hero = () => {
               animate={{ y: [0, -6, 0] }}
               transition={{ duration: 3, delay: i * 0.5, repeat: Infinity, ease: "easeInOut" }}
               style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
-              <div style={{
+              <div aria-hidden="true" style={{
                 width: 46, height: 46, borderRadius: 8,
                 background: "rgba(200,134,10,0.1)",
                 border: "1px solid rgba(200,134,10,0.3)",
@@ -410,13 +466,13 @@ const Hero = () => {
         </motion.div>
       </div>
  
-      {/* Scroll hint */}
-      <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 2 }}
+      {/* Scroll hint (decorative) */}
+      <motion.div aria-hidden="true" animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 2 }}
         style={{ position: "absolute", bottom: "2rem", left: "50%",
           transform: "translateX(-50%)", zIndex: 10,
           display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
         <span style={{ fontSize: "0.58rem", letterSpacing: "0.3em",
-          color: "#5A6785", fontFamily: "'Barlow Condensed', sans-serif" }}>
+          color: "#8B9AB5", fontFamily: "'Barlow Condensed', sans-serif" }}>
           SCROLL
         </span>
         <ChevronDown size={15} style={{ color: B.gold, opacity: 0.8 }} />
@@ -432,7 +488,7 @@ const Services = () => {
   const [ref, visible] = useInView();
  
   return (
-    <section id="services" ref={ref} style={{ background: t.bg, padding: "7rem 2rem" }}>
+    <section id="services" ref={ref} aria-labelledby="services-heading" style={{ background: t.bg, padding: "7rem 2rem" }}>
       <div style={{ maxWidth: 1140, margin: "0 auto" }}>
  
         {/* Section header */}
@@ -440,26 +496,26 @@ const Services = () => {
         <motion.div initial={{ opacity: 0, y: 30 }} animate={visible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }} style={{ marginBottom: "4rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-            <div style={{ width: 40, height: 3, background: B.gradG, borderRadius: 2 }} />
+            <div aria-hidden="true" style={{ width: 40, height: 3, background: B.gradG, borderRadius: 2 }} />
             <span style={{ fontSize: "0.72rem", letterSpacing: "0.3em", fontWeight: 700,
               color: B.gold, fontFamily: "'Barlow Condensed', sans-serif",
               textShadow: "0 0 20px rgba(200,134,10,0.3)" }}>
               WHAT WE OFFER
             </span>
           </div>
-          <h2 style={{ fontFamily: "'Oswald', sans-serif",
+          <h2 id="services-heading" style={{ fontFamily: "'Oswald', sans-serif",
             fontSize: "clamp(2rem, 5vw, 3.4rem)", fontWeight: 600,
-            lineHeight: 1.1, color: t.text,
+            lineHeight: 1.1, color: t.text, margin: 0,
             textShadow: dark ? "0 2px 15px rgba(200,134,10,0.25), 0 4px 30px rgba(0,0,0,0.3)" : "0 2px 10px rgba(27,43,75,0.15), 0 4px 20px rgba(0,0,0,0.08)" }}>
             Our Core{" "}
             <span style={{ background: B.gradH,
               WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-              Services
+              Container Services
             </span>
           </h2>
-          <p style={{ color: t.muted, marginTop: "1rem", maxWidth: 560, lineHeight: 1.7,
+          <p style={{ color: t.muted, marginTop: "1rem", maxWidth: 600, lineHeight: 1.7,
             fontFamily: "'Barlow', sans-serif", fontSize: "0.95rem" }}>
-            At BIGTEUS INTERMODAL, we deliver dependable container sales, leasing, fabrication, and transportation services. Get in touch to support your business needs.
+            At Bigteus Intermodal in Chennai, we deliver dependable container sales, leasing, fabrication and transportation services, including used shipping containers for sale. Get in touch to discuss your business needs.
           </p>
         </motion.div>
         </SR>
@@ -469,7 +525,7 @@ const Services = () => {
           gap: "1.5rem",
         }}>
           {SERVICES.map((s, i) => (
-            <motion.div key={s.title}
+            <motion.article key={s.title}
               initial={{ opacity: 0, y: 40 }}
               animate={visible ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: i * 0.12, duration: 0.65 }}
@@ -486,18 +542,18 @@ const Services = () => {
               onMouseLeave={e => e.currentTarget.style.borderColor = t.border}>
                 {/* Image strip */}
                 <div style={{ height: 190, overflow: "hidden", position: "relative" }}>
-                  <img src={s.img} alt={s.title}
+                  <img src={s.img} alt={s.alt} loading="lazy" decoding="async"
                     style={{ width: "100%", height: "100%", objectFit: "cover",
                       transition: "transform 0.6s ease, filter 0.6s ease" }}
                     onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.1)"; e.currentTarget.style.filter = "brightness(1.15)"; }}
                     onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.filter = "brightness(1)"; }}
                   />
-                  <div style={{
+                  <div aria-hidden="true" style={{
                     position: "absolute", inset: 0,
                     background: `linear-gradient(to top, ${dark ? "rgba(11,15,26,0.85)" : "rgba(27,43,75,0.6)"} 0%, transparent 60%)`,
                   }} />
                   {/* Tag pill */}
-                  <div style={{
+                  <div aria-hidden="true" style={{
                     position: "absolute", top: 12, left: 12,
                     background: `${s.color}CC`, borderRadius: 4,
                     padding: "4px 10px",
@@ -515,6 +571,7 @@ const Services = () => {
                 <div style={{ padding: "1.5rem" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: "0.6rem" }}>
                     <motion.div
+                      aria-hidden="true"
                       whileHover={{ scale: 1.2, rotate: 10, background: `${s.color}30`, transition: { duration: 0.3 } }}
                       style={{
                         width: 36, height: 36, borderRadius: 8,
@@ -525,10 +582,11 @@ const Services = () => {
                       <s.icon size={16} style={{ color: s.color }} />
                     </motion.div>
                     <div>
-                      <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: "1.05rem",
-                        fontWeight: 600, color: t.text, letterSpacing: "0.03em" }}>
+                      <h3 style={{ fontFamily: "'Oswald', sans-serif", fontSize: "1.05rem",
+                        fontWeight: 600, color: t.text, letterSpacing: "0.03em",
+                        margin: 0, lineHeight: 1.3 }}>
                         {s.title}
-                      </div>
+                      </h3>
                       <div style={{ fontSize: "0.68rem", color: s.color, fontWeight: 600,
                         letterSpacing: "0.12em", fontFamily: "'Barlow Condensed', sans-serif" }}>
                         {s.subtitle}
@@ -536,17 +594,18 @@ const Services = () => {
                     </div>
                   </div>
                   <p style={{ color: t.muted, lineHeight: 1.7, fontSize: "0.86rem",
-                    fontFamily: "'Barlow', sans-serif" }}>
+                    fontFamily: "'Barlow', sans-serif", margin: 0 }}>
                     {s.desc}
                   </p>
                 </div>
 
                 {/* Bottom accent line */}
                 <motion.div
+                  aria-hidden="true"
                   initial={{ scaleX: 0 }}
                   whileHover={{ scaleX: 1 }}
                   style={{ height: 3, background: `linear-gradient(90deg, ${s.color}, ${B.gold}, transparent)`, transformOrigin: "left", transition: "transform 0.4s" }} />
-              </motion.div>
+              </motion.article>
             ))}
         </div>
       </div>
@@ -561,7 +620,7 @@ const About = () => {
   const [ref, visible] = useInView();
  
   return (
-    <section id="about" ref={ref} style={{ background: t.surface, padding: "7rem 2rem",
+    <section id="about" ref={ref} aria-labelledby="about-heading" style={{ background: t.surface, padding: "7rem 2rem",
       borderTop: `1px solid ${t.border}`, borderBottom: `1px solid ${t.border}` }}>
       <div style={{ maxWidth: 1140, margin: "0 auto",
         display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
@@ -571,20 +630,20 @@ const About = () => {
         <motion.div initial={{ opacity: 0, x: -40 }}
           animate={visible ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8 }}>
           <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-            <div style={{ width: 40, height: 3, background: B.gradG, borderRadius: 2 }} />
+            <div aria-hidden="true" style={{ width: 40, height: 3, background: B.gradG, borderRadius: 2 }} />
             <span style={{ fontSize: "0.72rem", letterSpacing: "0.3em", fontWeight: 700,
               color: B.gold, fontFamily: "'Barlow Condensed', sans-serif",
               textShadow: "0 0 20px rgba(200,134,10,0.3)" }}>WHO WE ARE</span>
           </div>
  
-          <h2 style={{ fontFamily: "'Oswald', sans-serif",
+          <h2 id="about-heading" style={{ fontFamily: "'Oswald', sans-serif",
             fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 600,
-            lineHeight: 1.1, marginBottom: "1.5rem", color: t.text,
+            lineHeight: 1.1, marginTop: 0, marginBottom: "1.5rem", color: t.text,
             textShadow: dark ? "0 2px 15px rgba(200,134,10,0.25), 0 4px 30px rgba(0,0,0,0.3)" : "0 2px 10px rgba(27,43,75,0.15), 0 4px 20px rgba(0,0,0,0.08)" }}>
-            Trusted Partner in<br />
+            Trusted Container Partner in<br />
             <span style={{ background: B.gradH,
               WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-              Intermodal Trade
+              Chennai &amp; Intermodal Trade
             </span>
           </h2>
  
@@ -598,7 +657,7 @@ const About = () => {
           </p>
           <p style={{ color: t.muted, lineHeight: 1.8, marginBottom: "1.2rem",
             fontSize: "0.93rem", fontFamily: "'Barlow', sans-serif" }}>
-            From our Chennai headquarters, we orchestrate seamless container transactions and intermodal freight operations that power global commerce.
+            From our Chennai headquarters in Perungudi, we orchestrate seamless container transactions and intermodal freight operations that power global commerce, helping customers who are looking for used containers for sale, container leasing and container trading services in India.
           </p>
           <p style={{ color: B.goldLt, lineHeight: 1.8, marginBottom: "2rem",
             fontSize: "0.93rem", fontFamily: "'Barlow', sans-serif", fontStyle: "italic" }}>
@@ -613,7 +672,7 @@ const About = () => {
                 style={{
                   background: "rgba(200,134,10,0.1)",
                   border: "1px solid rgba(200,134,10,0.3)",
-                  color: B.goldLt, padding: "5px 14px", borderRadius: 4,
+                  color: dark ? B.goldLt : "#9A6407", padding: "5px 14px", borderRadius: 4,
                   fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em",
                   fontFamily: "'Barlow Condensed', sans-serif",
                   cursor: "pointer", display: "inline-block",
@@ -641,13 +700,13 @@ const About = () => {
               transition: { duration: 0.3 },
             }}>
             <div style={{ display: "flex", gap: "0.8rem", alignItems: "flex-start" }}>
-              <div style={{
+              <div aria-hidden="true" style={{
                 width: 38, height: 38, borderRadius: 8, flexShrink: 0,
                 background: `rgba(200,134,10,0.15)`,
                 border: `1px solid rgba(200,134,10,0.35)`,
                 display: "flex", alignItems: "center", justifyContent: "center",
               }}>
-                <MapPin size={16} style={{ color: B.goldLt }} />
+                <MapPin size={16} style={{ color: dark ? B.goldLt : "#9A6407" }} />
               </div>
               <div>
                 <motion.span
@@ -655,12 +714,12 @@ const About = () => {
                   animate={visible ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: 0.2, duration: 0.5 }}
                   style={{ fontSize: "0.62rem", letterSpacing: "0.2em", fontWeight: 700,
-                    color: B.goldLt, fontFamily: "'Barlow Condensed', sans-serif",
+                    color: dark ? B.goldLt : "#9A6407", fontFamily: "'Barlow Condensed', sans-serif",
                     display: "inline-block", marginBottom: "0.3rem" }}
                   whileHover={{ letterSpacing: "0.35em", transition: { duration: 0.3 } }}>
                   OUR OFFICE
                 </motion.span>
-                <motion.span
+                <motion.address
                   initial={{ opacity: 0, x: -10 }}
                   animate={visible ? { opacity: 1, x: 0 } : {}}
                   transition={{ delay: 0.3, duration: 0.6 }}
@@ -672,6 +731,7 @@ const About = () => {
                     transition: { duration: 0.3 },
                   }}
                   style={{ color: t.text, fontSize: "0.93rem", fontWeight: 500,
+                    fontStyle: "normal",
                     fontFamily: "'Barlow', sans-serif", lineHeight: 1.7,
                     display: "block", cursor: "pointer",
                     borderLeft: `2px solid transparent`,
@@ -682,7 +742,7 @@ const About = () => {
                   No.17 E, Neithal Street, Thiruvallur Nagar,<br />
                   Near World Trade Center, Perungudi,<br />
                   Chennai – 600096
-                </motion.span>
+                </motion.address>
               </div>
             </div>
           </motion.div>
@@ -690,8 +750,8 @@ const About = () => {
           {[
             { Icon: Users, text: "Mr. Muthuvijay — Managing Director" },
             { Icon: Phone, text: "+91 6369760485 · +91 7010484023" },
-            { Icon: Mail,  text: "info@bigteus-intermodal.com" },
-            { Icon: Mail,  text: "Sales@bigteus-intermodal.com" },
+            { Icon: Mail,  text: "info@bigteus-intermodal.com", href: "mailto:info@bigteus-intermodal.com" },
+            { Icon: Mail,  text: "Sales@bigteus-intermodal.com", href: "mailto:Sales@bigteus-intermodal.com" },
             { Icon: Clock, text: "Mon – Sat, 09:00 – 19:00 IST" },
           ].map((item, i) => (
             <motion.div key={i}
@@ -706,6 +766,7 @@ const About = () => {
               style={{ display: "flex", gap: "0.9rem", alignItems: "flex-start",
                 marginBottom: "0.9rem", cursor: "pointer" }}>
               <motion.div
+                aria-hidden="true"
                 whileHover={{
                   scale: 1.2,
                   rotate: 8,
@@ -721,17 +782,26 @@ const About = () => {
                 }}>
                 <item.Icon size={14} style={{ color: B.gold }} />
               </motion.div>
-              <motion.span
-                whileHover={{ color: B.goldLt, textShadow: "0 0 12px rgba(200,134,10,0.12)", transition: { duration: 0.25 } }}
-                style={{ color: t.muted, fontSize: "0.87rem",
-                  fontFamily: "'Barlow', sans-serif", lineHeight: 1.6 }}>
-                {item.text}
-              </motion.span>
+              {item.href ? (
+                <motion.a href={item.href}
+                  whileHover={{ color: B.goldLt, textShadow: "0 0 12px rgba(200,134,10,0.12)", transition: { duration: 0.25 } }}
+                  style={{ color: t.muted, fontSize: "0.87rem", textDecoration: "none",
+                    fontFamily: "'Barlow', sans-serif", lineHeight: 1.6 }}>
+                  {item.text}
+                </motion.a>
+              ) : (
+                <motion.span
+                  whileHover={{ color: B.goldLt, textShadow: "0 0 12px rgba(200,134,10,0.12)", transition: { duration: 0.25 } }}
+                  style={{ color: t.muted, fontSize: "0.87rem",
+                    fontFamily: "'Barlow', sans-serif", lineHeight: 1.6 }}>
+                  {item.text}
+                </motion.span>
+              )}
             </motion.div>
           ))}
  
           {/* CIN */}
-          <p style={{ color: dark ? "#3D4F6A" : "#9AABBF", fontSize: "0.72rem", marginTop: "0.5rem",
+          <p style={{ color: t.muted, fontSize: "0.72rem", marginTop: "0.5rem",
             fontFamily: "'Barlow', sans-serif", letterSpacing: "0.05em" }}>
             CIN: U77308TN2026PTC192021
           </p>
@@ -748,16 +818,17 @@ const About = () => {
             transition: "box-shadow 0.4s, transform 0.4s", cursor: "pointer" }}
             onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 20px 50px rgba(200,134,10,0.15)"; e.currentTarget.style.transform = "scale(1.02)"; }}
             onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.transform = "scale(1)"; }}>
-            <img src={ASSETS.containersSunset} alt="Container operations at sunset"
+            <img src={ASSETS.containersSunset} alt="Shipping containers at a container yard at sunset"
+              loading="lazy" decoding="async"
               style={{ width: "100%", height: 320, objectFit: "cover", display: "block" }} />
-            <div style={{
+            <div aria-hidden="true" style={{
               position: "absolute", inset: 0,
               background: dark
                 ? "linear-gradient(to top, rgba(11,15,26,0.75) 0%, transparent 55%)"
                 : "linear-gradient(to top, rgba(27,43,75,0.55) 0%, transparent 55%)",
             }} />
             {/* Gold border glow */}
-            <div style={{ position: "absolute", inset: -1, borderRadius: 12,
+            <div aria-hidden="true" style={{ position: "absolute", inset: -1, borderRadius: 12,
               background: `linear-gradient(135deg, ${B.navy}, ${B.gold})`,
               opacity: 0.2, zIndex: -1, filter: "blur(12px)", pointerEvents: "none" }} />
           </div>
@@ -774,16 +845,16 @@ const About = () => {
               transition: "border-color 0.3s" }}
               onMouseEnter={e => e.currentTarget.style.borderColor = `${B.gold}40`}
               onMouseLeave={e => e.currentTarget.style.borderColor = t.border}>
-              <div style={{ fontSize: "0.62rem", letterSpacing: "0.22em", fontWeight: 700,
-                color: B.gold, marginBottom: "0.8rem",
+              <h3 style={{ fontSize: "0.62rem", letterSpacing: "0.22em", fontWeight: 700,
+                color: dark ? B.gold : "#9A6407", marginTop: 0, marginBottom: "0.8rem",
                 fontFamily: "'Barlow Condensed', sans-serif" }}>
-                🇮🇳 INDIA HUBS
-              </div>
+                <span aria-hidden="true">🇮🇳 </span>INDIA HUBS
+              </h3>
               {PORTS_INDIA.map((p, i) => (
                 <SR key={p} delay={i * 0.06} direction="left" distance={20} duration={0.4}>
                 <div style={{ display: "flex", alignItems: "center", gap: 6,
                   marginBottom: "0.45rem" }}>
-                  <div style={{ width: 5, height: 5, borderRadius: "50%",
+                  <div aria-hidden="true" style={{ width: 5, height: 5, borderRadius: "50%",
                     background: B.gold, flexShrink: 0 }} />
                   <span style={{ fontSize: "0.8rem", color: t.muted,
                     fontFamily: "'Barlow', sans-serif" }}>{p}</span>
@@ -800,16 +871,16 @@ const About = () => {
               transition: "border-color 0.3s" }}
               onMouseEnter={e => e.currentTarget.style.borderColor = `${B.steel}40`}
               onMouseLeave={e => e.currentTarget.style.borderColor = t.border}>
-              <div style={{ fontSize: "0.62rem", letterSpacing: "0.22em", fontWeight: 700,
-                color: B.steel, marginBottom: "0.8rem",
+              <h3 style={{ fontSize: "0.62rem", letterSpacing: "0.22em", fontWeight: 700,
+                color: dark ? B.goldLt : B.steel, marginTop: 0, marginBottom: "0.8rem",
                 fontFamily: "'Barlow Condensed', sans-serif" }}>
-                🌍 OVERSEAS
-              </div>
+                <span aria-hidden="true">🌍 </span>OVERSEAS
+              </h3>
               {PORTS_OVERSEAS.map((p, i) => (
                 <SR key={p} delay={i * 0.06} direction="right" distance={20} duration={0.4}>
                 <div style={{ display: "flex", alignItems: "center", gap: 6,
                   marginBottom: "0.45rem" }}>
-                  <div style={{ width: 5, height: 5, borderRadius: "50%",
+                  <div aria-hidden="true" style={{ width: 5, height: 5, borderRadius: "50%",
                     background: B.steel, flexShrink: 0 }} />
                   <span style={{ fontSize: "0.8rem", color: t.muted,
                     fontFamily: "'Barlow', sans-serif" }}>{p}</span>
@@ -832,21 +903,21 @@ const Media = () => {
   const [ref, visible] = useInView();
  
   return (
-    <section id="media" ref={ref} style={{ background: t.bg, padding: "7rem 2rem" }}>
+    <section id="media" ref={ref} aria-labelledby="media-heading" style={{ background: t.bg, padding: "7rem 2rem" }}>
       <div style={{ maxWidth: 1140, margin: "0 auto" }}>
  
         <motion.div initial={{ opacity: 0, y: 30 }} animate={visible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }} style={{ marginBottom: "3.5rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-            <div style={{ width: 40, height: 3, background: B.gradG, borderRadius: 2 }} />
+            <div aria-hidden="true" style={{ width: 40, height: 3, background: B.gradG, borderRadius: 2 }} />
             <span style={{ fontSize: "0.72rem", letterSpacing: "0.3em", fontWeight: 700,
               color: B.gold, fontFamily: "'Barlow Condensed', sans-serif",
               textShadow: "0 0 20px rgba(200,134,10,0.3)" }}>GALLERY</span>
           </div>
-          <h2 style={{ fontFamily: "'Oswald', sans-serif",
-            fontSize: "clamp(2rem, 5vw, 3.4rem)", fontWeight: 600, color: t.text,
+          <h2 id="media-heading" style={{ fontFamily: "'Oswald', sans-serif",
+            fontSize: "clamp(2rem, 5vw, 3.4rem)", fontWeight: 600, color: t.text, margin: 0,
             textShadow: dark ? "0 2px 15px rgba(200,134,10,0.25), 0 4px 30px rgba(0,0,0,0.3)" : "0 2px 10px rgba(27,43,75,0.15), 0 4px 20px rgba(0,0,0,0.08)" }}>
-            Operations in{" "}
+            Shipping Container Operations in{" "}
             <span style={{ background: B.gradH,
               WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
               Action
@@ -859,8 +930,11 @@ const Media = () => {
             animate={{ x: ["0%", "-50%"] }}
             transition={{ x: { duration: 40, repeat: Infinity, ease: "linear" } }}
             style={{ display: "flex", gap: "1.2rem", width: "max-content" }}>
-            {[...MEDIA_ITEMS, ...MEDIA_ITEMS].map((img, i) => (
+            {[...MEDIA_ITEMS, ...MEDIA_ITEMS].map((img, i) => {
+              const isCopy = i >= MEDIA_ITEMS.length;
+              return (
               <motion.div key={i}
+                aria-hidden={isCopy ? "true" : undefined}
                 initial={{ opacity: 0, scale: 0.93 }}
                 animate={visible ? { opacity: 1, scale: 1 } : {}}
                 transition={{ delay: (i % MEDIA_ITEMS.length) * 0.1, duration: 0.55 }}
@@ -871,10 +945,11 @@ const Media = () => {
                   minWidth: 310, maxWidth: 310, flexShrink: 0 }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor = `${img.color}60`; e.currentTarget.style.boxShadow = `0 20px 50px rgba(0,0,0,0.3), 0 0 25px ${img.color}15`; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = t.border; e.currentTarget.style.boxShadow = "none"; }}>
-                <motion.img src={img.src} alt={img.alt}
+                <motion.img src={img.src} alt={isCopy ? "" : img.alt}
+                  loading="lazy" decoding="async"
                   variants={{ hover: { scale: 1.1, filter: "brightness(1.1)" } }} transition={{ duration: 0.6 }}
                   style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                <motion.div variants={{ hover: { opacity: 1 } }} initial={{ opacity: 0 }}
+                <motion.div aria-hidden="true" variants={{ hover: { opacity: 1 } }} initial={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
                   style={{
                     position: "absolute", inset: 0,
@@ -884,11 +959,12 @@ const Media = () => {
                   <span style={{ color: "#fff", fontSize: "0.85rem", fontWeight: 500,
                     fontFamily: "'Barlow', sans-serif" }}>{img.alt}</span>
                 </motion.div>
-                <motion.div variants={{ hover: { opacity: 1 } }} initial={{ opacity: 0 }}
+                <motion.div aria-hidden="true" variants={{ hover: { opacity: 1 } }} initial={{ opacity: 0 }}
                   style={{ position: "absolute", inset: 0, borderRadius: 10,
                     boxShadow: `inset 0 0 0 2px ${img.color}`, pointerEvents: "none" }} />
               </motion.div>
-            ))}
+              );
+            })}
           </motion.div>
         </div>
       </div>
@@ -944,22 +1020,24 @@ const Contact = () => {
     outline: "none", transition: "border-color 0.25s, box-shadow 0.25s",
     boxSizing: "border-box",
   });
+
+  const autoCompleteMap = { name: "name", email: "email", phone: "tel" };
  
   return (
-    <section id="contact" ref={ref} style={{ background: t.surface, padding: "7rem 2rem",
+    <section id="contact" ref={ref} aria-labelledby="contact-heading" style={{ background: t.surface, padding: "7rem 2rem",
       borderTop: `1px solid ${t.border}` }}>
       <div style={{ maxWidth: 760, margin: "0 auto" }}>
  
         <motion.div initial={{ opacity: 0, y: 30 }} animate={visible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }} style={{ marginBottom: "3rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-            <div style={{ width: 40, height: 3, background: B.gradG, borderRadius: 2 }} />
+            <div aria-hidden="true" style={{ width: 40, height: 3, background: B.gradG, borderRadius: 2 }} />
             <span style={{ fontSize: "0.72rem", letterSpacing: "0.3em", fontWeight: 700,
               color: B.gold, fontFamily: "'Barlow Condensed', sans-serif",
               textShadow: "0 0 20px rgba(200,134,10,0.3)" }}>REACH OUT</span>
           </div>
-          <h2 style={{ fontFamily: "'Oswald', sans-serif",
-            fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 600, color: t.text,
+          <h2 id="contact-heading" style={{ fontFamily: "'Oswald', sans-serif",
+            fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 600, color: t.text, margin: 0,
             textShadow: dark ? "0 2px 15px rgba(200,134,10,0.25), 0 4px 30px rgba(0,0,0,0.3)" : "0 2px 10px rgba(27,43,75,0.15), 0 4px 20px rgba(0,0,0,0.08)" }}>
             Start a{" "}
             <span style={{ background: B.gradH,
@@ -967,19 +1045,24 @@ const Contact = () => {
               Conversation
             </span>
           </h2>
+          <p style={{ color: t.muted, marginTop: "1rem", lineHeight: 1.7,
+            fontFamily: "'Barlow', sans-serif", fontSize: "0.95rem" }}>
+            Enquire about used containers for sale, container leasing, fabrication or transportation. Tell us the container type, size, quantity and delivery location you need.
+          </p>
         </motion.div>
  
         <AnimatePresence mode="wait">
           {submitted ? (
             <motion.div key="ok" initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
+              role="status"
               style={{ textAlign: "center", padding: "4rem 2rem",
                 background: t.card, borderRadius: 12,
                 border: `1px solid rgba(46,127,82,0.4)`,
                 boxShadow: "0 0 40px rgba(46,127,82,0.1)" }}>
-              <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>✅</div>
+              <div aria-hidden="true" style={{ fontSize: "3rem", marginBottom: "1rem" }}>✅</div>
               <h3 style={{ fontFamily: "'Oswald', sans-serif", fontSize: "1.7rem",
-                marginBottom: "0.7rem", color: t.text,
+                marginTop: 0, marginBottom: "0.7rem", color: t.text,
                 textShadow: dark ? "0 2px 12px rgba(200,134,10,0.2), 0 4px 20px rgba(0,0,0,0.2)" : "0 2px 8px rgba(27,43,75,0.1)" }}>Message Sent!</h3>
               <p style={{ color: t.muted, marginBottom: "2rem",
                 fontFamily: "'Barlow', sans-serif" }}>
@@ -1006,11 +1089,17 @@ const Contact = () => {
                 gap: "1.2rem", marginBottom: "1.2rem" }}>
                 {["name", "email", "phone"].map(field => (
                   <div key={field}>
-                    <label style={{ fontSize: "0.65rem", letterSpacing: "0.18em",
+                    <label htmlFor={`contact-${field}`} style={{ fontSize: "0.65rem", letterSpacing: "0.18em",
                       color: t.muted, textTransform: "uppercase", display: "block",
                       marginBottom: "0.45rem", fontFamily: "'Barlow Condensed', sans-serif",
                       fontWeight: 700 }}>{field}</label>
                     <input
+                      id={`contact-${field}`}
+                      name={field}
+                      autoComplete={autoCompleteMap[field]}
+                      aria-required="true"
+                      aria-invalid={errors[field] ? "true" : "false"}
+                      aria-describedby={errors[field] ? `contact-${field}-error` : undefined}
                       type={field === "email" ? "email" : field === "phone" ? "tel" : "text"}
                       value={form[field]}
                       onChange={e => setForm({ ...form, [field]: e.target.value })}
@@ -1019,7 +1108,7 @@ const Contact = () => {
                       placeholder={field === "name" ? "Your name" : field === "email" ? "you@company.com" : "+91 0000000000"}
                       style={inputStyle(field)}
                     />
-                    {errors[field] && <span style={{ color: "#EF4444", fontSize: "0.7rem",
+                    {errors[field] && <span id={`contact-${field}-error`} role="alert" style={{ color: "#EF4444", fontSize: "0.7rem",
                       marginTop: 3, display: "block",
                       fontFamily: "'Barlow', sans-serif" }}>{errors[field]}</span>}
                   </div>
@@ -1027,18 +1116,21 @@ const Contact = () => {
               </div>
  
               <div style={{ marginBottom: "1.5rem" }}>
-                <label style={{ fontSize: "0.65rem", letterSpacing: "0.18em",
+                <label htmlFor="contact-message" style={{ fontSize: "0.65rem", letterSpacing: "0.18em",
                   color: t.muted, textTransform: "uppercase", display: "block",
                   marginBottom: "0.45rem", fontFamily: "'Barlow Condensed', sans-serif",
                   fontWeight: 700 }}>Message</label>
-                <textarea rows={5} value={form.message}
+                <textarea id="contact-message" name="message" rows={5} value={form.message}
+                  aria-required="true"
+                  aria-invalid={errors.message ? "true" : "false"}
+                  aria-describedby={errors.message ? "contact-message-error" : undefined}
                   onChange={e => setForm({ ...form, message: e.target.value })}
                   onFocus={e => { e.target.style.borderColor = B.gold; e.target.style.boxShadow = `0 0 0 3px rgba(200,134,10,0.12)`; }}
                   onBlur={e => { e.target.style.borderColor = errors.message ? "#EF4444" : t.border; e.target.style.boxShadow = "none"; }}
                   placeholder="Tell us about your container requirements..."
                   style={{ ...inputStyle("message"), resize: "vertical", minHeight: 110 }}
                 />
-                {errors.message && <span style={{ color: "#EF4444", fontSize: "0.7rem",
+                {errors.message && <span id="contact-message-error" role="alert" style={{ color: "#EF4444", fontSize: "0.7rem",
                   marginTop: 3, display: "block",
                   fontFamily: "'Barlow', sans-serif" }}>{errors.message}</span>}
               </div>
@@ -1050,7 +1142,7 @@ const Contact = () => {
                   fontWeight: 700, fontSize: "0.9rem", letterSpacing: "0.14em",
                   cursor: "pointer", fontFamily: "'Barlow Condensed', sans-serif",
                   display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-                <Send size={15} />
+                <Send size={15} aria-hidden="true" />
                 {sending ? "SENDING..." : "SEND MESSAGE"}
               </motion.button>
             </motion.div>
@@ -1062,21 +1154,6 @@ const Contact = () => {
 };
  
 // ─── Footer ───────────────────────────────────────────────────────────────────
-const FOOTER_COLS = [
-  {
-    title: "Services",
-    links: ["Container Trading", "Container Leasing", "Container Fabrication", "Container Transport"],
-  },
-  {
-    title: "Company",
-    links: ["About Us", "Media Gallery", "Contact"],
-  },
-  {
-    title: "Legal",
-    links: ["Privacy Policy", "Terms of Service"],
-  },
-];
- 
 const Footer = () => {
   const { dark } = useTheme();
   const t = T(dark);
@@ -1086,7 +1163,7 @@ const Footer = () => {
       borderTop: `2px solid ${B.gold}40`, padding: "4rem 2rem 2rem" }}>
       <div style={{ maxWidth: 1140, margin: "0 auto" }}>
         {/* Top gold stripe accent */}
-        <div style={{ height: 2, background: B.gradG, borderRadius: 1, marginBottom: "3rem" }} />
+        <div aria-hidden="true" style={{ height: 2, background: B.gradG, borderRadius: 1, marginBottom: "3rem" }} />
  
         <div style={{ display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
@@ -1095,29 +1172,33 @@ const Footer = () => {
           {/* Brand col */}
           <div>
             <div style={{ marginBottom: "1.5rem" }}>
-              <img src={ASSETS.logo} alt="BTi"
+              <img src={ASSETS.logo} alt="Bigteus Intermodal logo" loading="lazy" decoding="async"
                 style={{ height: 60, width: 160, objectFit: "contain", display: "block",
                   filter: "brightness(1.1) drop-shadow(0 0 8px rgba(200,134,10,0.2))" }} />
             </div>
-            <p style={{ color: "#5A6785", fontSize: "0.83rem", lineHeight: 1.7,
-              marginBottom: "0.8rem", fontFamily: "'Barlow', sans-serif" }}>
-              BIGTEUS INTERMODAL PVT. LTD.<br />
-              No.17 E, Neithal Street, Near World Trade Center,<br />
-              Perungudi, Chennai – 600096
-            </p>
-            <p style={{ color: "#5A6785", fontSize: "0.78rem",
-              fontFamily: "'Barlow', sans-serif", marginBottom: "0.3rem" }}>
-              +91 6369760485 · +91 7010484023
-            </p>
-            <p style={{ color: "#5A6785", fontSize: "0.78rem",
-              fontFamily: "'Barlow', sans-serif", marginBottom: "0.3rem" }}>
-              info@bigteus-intermodal.com
-            </p>
-            <p style={{ color: "#5A6785", fontSize: "0.78rem",
-              fontFamily: "'Barlow', sans-serif", marginBottom: "0.3rem" }}>
-              sales@bigteus-intermodal.com
-            </p>
-            <p style={{ color: "#3D4F6A", fontSize: "0.68rem", marginTop: "0.6rem",
+            <address style={{ fontStyle: "normal" }}>
+              <p style={{ color: "#8B9AB5", fontSize: "0.83rem", lineHeight: 1.7,
+                marginTop: 0, marginBottom: "0.8rem", fontFamily: "'Barlow', sans-serif" }}>
+                BIGTEUS INTERMODAL PVT. LTD.<br />
+                No.17 E, Neithal Street, Near World Trade Center,<br />
+                Perungudi, Chennai – 600096
+              </p>
+              <p style={{ color: "#8B9AB5", fontSize: "0.78rem",
+                fontFamily: "'Barlow', sans-serif", marginTop: 0, marginBottom: "0.3rem" }}>
+                +91 6369760485 · +91 7010484023
+              </p>
+              <p style={{ color: "#8B9AB5", fontSize: "0.78rem",
+                fontFamily: "'Barlow', sans-serif", marginTop: 0, marginBottom: "0.3rem" }}>
+                <a href="mailto:info@bigteus-intermodal.com"
+                  style={{ color: "inherit", textDecoration: "none" }}>info@bigteus-intermodal.com</a>
+              </p>
+              <p style={{ color: "#8B9AB5", fontSize: "0.78rem",
+                fontFamily: "'Barlow', sans-serif", marginTop: 0, marginBottom: "0.3rem" }}>
+                <a href="mailto:sales@bigteus-intermodal.com"
+                  style={{ color: "inherit", textDecoration: "none" }}>sales@bigteus-intermodal.com</a>
+              </p>
+            </address>
+            <p style={{ color: "#6B7C99", fontSize: "0.68rem", marginTop: "0.6rem", marginBottom: 0,
               fontFamily: "'Barlow', sans-serif" }}>
               CIN: U77308TN2026PTC192021
             </p>
@@ -1125,54 +1206,61 @@ const Footer = () => {
  
           {FOOTER_COLS.map((col, ci) => (
             <SR key={col.title} delay={0.1 + ci * 0.12} direction="up" distance={25}>
-            <div>
+            <nav aria-label={`${col.title} links`}>
               <div style={{ fontSize: "0.65rem", letterSpacing: "0.25em", fontWeight: 700,
                 color: B.gold, marginBottom: "1.2rem", textTransform: "uppercase",
                 fontFamily: "'Barlow Condensed', sans-serif" }}>{col.title}</div>
               {col.links.map(link => (
-                <motion.a key={link} href="#" whileHover={{ x: 4, color: B.goldLt }}
-                  style={{ display: "block", color: "#5A6785", fontSize: "0.83rem",
+                <motion.a key={link.label} href={link.href} whileHover={{ x: 4, color: B.goldLt }}
+                  style={{ display: "block", color: "#8B9AB5", fontSize: "0.83rem",
                     textDecoration: "none", marginBottom: "0.55rem",
                     transition: "color 0.2s",
                     fontFamily: "'Barlow', sans-serif" }}>
-                  {link}
+                  {link.label}
                 </motion.a>
               ))}
-            </div>
+            </nav>
             </SR>
           ))}
         </div>
  
-        <div style={{ height: 1, background: "rgba(200,134,10,0.15)", marginBottom: "1.8rem" }} />
+        <div aria-hidden="true" style={{ height: 1, background: "rgba(200,134,10,0.15)", marginBottom: "1.8rem" }} />
  
         <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem",
           justifyContent: "space-between", alignItems: "center" }}>
-          <p style={{ color: "#3D4F6A", fontSize: "0.75rem",
+          <p style={{ color: "#6B7C99", fontSize: "0.75rem", margin: 0,
             fontFamily: "'Barlow', sans-serif" }}>
             © 2026 Bigteus Intermodal Private Limited. All rights reserved.
           </p>
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
             <motion.a href="https://www.instagram.com/bigteus_intermodal_pvt_ltd"
               target="_blank" rel="noopener noreferrer"
+              aria-label="Bigteus Intermodal on Instagram"
               whileHover={{ scale: 1.2, color: B.goldLt }}
-              style={{ color: "#3D4F6A", display: "flex", transition: "color 0.2s" }}>
-              <Instagram size={16} />
+              style={{ color: "#6B7C99", display: "flex", transition: "color 0.2s" }}>
+              <Instagram size={16} aria-hidden="true" />
             </motion.a>
-            {[Linkedin, Facebook, Twitter].map((Icon, i) => (
-              <motion.a key={i} href="#"
+            {[
+              { Icon: Linkedin, label: "LinkedIn" },
+              { Icon: Facebook, label: "Facebook" },
+              { Icon: Twitter,  label: "Twitter" },
+            ].map(({ Icon, label }) => (
+              <motion.a key={label} href="#"
+                aria-label={label}
                 whileHover={{ scale: 1.2, color: B.goldLt }}
-                style={{ color: "#3D4F6A", display: "flex", transition: "color 0.2s" }}>
-                <Icon size={16} />
+                style={{ color: "#6B7C99", display: "flex", transition: "color 0.2s" }}>
+                <Icon size={16} aria-hidden="true" />
               </motion.a>
             ))}
             <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              aria-label="Scroll back to top"
               style={{ width: 34, height: 34, borderRadius: 6,
                 background: "rgba(200,134,10,0.1)",
                 border: "1px solid rgba(200,134,10,0.25)",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 cursor: "pointer", color: B.gold, marginLeft: "0.4rem" }}>
-              <ArrowUp size={14} />
+              <ArrowUp size={14} aria-hidden="true" />
             </motion.button>
           </div>
         </div>
@@ -1193,17 +1281,32 @@ export default function BigteusSite() {
 function Shell() {
   const { dark } = useTheme();
   const t = T(dark);
+
+  // Set page title and meta description at runtime (index.html is unchanged).
+  useEffect(() => {
+    document.title = SEO.title;
+    let meta = document.querySelector('meta[name="description"]');
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.setAttribute("name", "description");
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute("content", SEO.description);
+  }, []);
+
   return (
     <div style={{ background: t.bg, color: t.text, minHeight: "100vh",
       transition: "background 0.4s, color 0.4s",
       fontFamily: "'Barlow', sans-serif" }}>
       <Navbar />
       <Toaster position="top-right" />
-      <Hero />
-      <SR delay={0.1} direction="up"><Services /></SR>
-      <SR delay={0.1} direction="up"><About /></SR>
-      <SR delay={0.1} direction="up"><Media /></SR>
-      <SR delay={0.1} direction="up"><Contact /></SR>
+      <main>
+        <Hero />
+        <SR delay={0.1} direction="up"><Services /></SR>
+        <SR delay={0.1} direction="up"><About /></SR>
+        <SR delay={0.1} direction="up"><Media /></SR>
+        <SR delay={0.1} direction="up"><Contact /></SR>
+      </main>
       <SR delay={0.1} direction="up"><Footer /></SR>
     </div>
   );
